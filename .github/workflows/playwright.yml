@@ -7,12 +7,20 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: 'Regenerate baseline snapshots'
+        type: boolean
+        default: false
 
 jobs:
   test:
     name: Run Playwright Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -33,7 +41,25 @@ jobs:
       - name: Build Angular app
         run: npm run build
 
+      # ── Snapshot update mode (manual dispatch or first-time setup) ────────
+      - name: Update snapshots
+        if: github.event.inputs.update_snapshots == 'true'
+        run: npm run e2e:update
+        env:
+          CI: true
+
+      - name: Commit updated snapshots
+        if: github.event.inputs.update_snapshots == 'true'
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add e2e/__snapshots__
+          git diff --staged --quiet && echo "No snapshot changes." || \
+            git commit -m "chore: update playwright snapshots [skip ci]" && git push
+
+      # ── Normal test run ───────────────────────────────────────────────────
       - name: Run Playwright tests
+        if: github.event.inputs.update_snapshots != 'true'
         id: playwright
         run: npm run e2e
         env:
@@ -60,7 +86,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: snapshot-diffs
-          path: e2e/__snapshots__/
+          path: |
+            e2e/__snapshots__/
+            test-results/
           retention-days: 7
 
       # ── Notify the commit author when tests fail ──────────────────────────
@@ -73,8 +101,13 @@ jobs:
           NAME=$(git log -1 --pretty=format:'%an')
           echo "name=$NAME" >> $GITHUB_OUTPUT
 
-      - name: Send failure email via SendGrid
-        if: failure() && github.event_name == 'push' && steps.author.outputs.email != ''
+      - name: Send failure email
+        if: >
+          failure() &&
+          github.event_name == 'push' &&
+          steps.author.outputs.email != '' &&
+          secrets.NOTIFY_EMAIL_USER != ''
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -84,7 +117,7 @@ jobs:
           password: ${{ secrets.NOTIFY_EMAIL_PASS }}
           to: ${{ steps.author.outputs.email }}
           from: "CI Bot <${{ secrets.NOTIFY_EMAIL_USER }}>"
-          subject: "❌ Playwright tests failed on master — ${{ github.repository }}"
+          subject: "Playwright tests failed on master — ${{ github.repository }}"
           body: |
             Hi ${{ steps.author.outputs.name }},
 
@@ -95,6 +128,6 @@ jobs:
             Message    : ${{ github.event.head_commit.message }}
             Run URL    : ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            Please review the attached Playwright report and fix the failing tests.
+            Please review the Playwright report artifact and fix the failing tests.
 
             — CI Bot
