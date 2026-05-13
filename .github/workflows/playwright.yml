@@ -102,11 +102,7 @@ jobs:
           echo "name=$NAME" >> $GITHUB_OUTPUT
 
       - name: Send failure email
-        if: >
-          failure() &&
-          github.event_name == 'push' &&
-          steps.author.outputs.email != '' &&
-          secrets.NOTIFY_EMAIL_USER != ''
+        if: failure() && github.event_name == 'push' && steps.author.outputs.email != ''
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
