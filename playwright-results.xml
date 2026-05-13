@@ -1,0 +1,62 @@
+<testsuites id="" name="" tests="9" failures="0" skipped="0" errors="0" time="3.794519">
+<testsuite name="todo.spec.ts" timestamp="2026-05-12T20:14:55.083Z" hostname="chromium" tests="9" failures="0" skipped="0" time="6.503" errors="0">
+<testcase name="Todo List App › full page screenshot matches baseline" classname="todo.spec.ts" time="0.895">
+<system-out>
+<![CDATA[A snapshot doesn't exist at D:\Dropbox\Projects\Samples\Angular-Playwright\todo-app\e2e\__snapshots__\todo.spec.ts\todo-full-page.png, writing actual.
+
+[[ATTACHMENT|e2e\__snapshots__\todo.spec.ts\todo-full-page.png]]
+
+[[ATTACHMENT|test-results\todo-Todo-List-App-full-page-screenshot-matches-baseline-chromium\todo-full-page-actual.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Todo List App › renders 3 initial todo items" classname="todo.spec.ts" time="0.533">
+</testcase>
+<testcase name="Todo List App › second item is pre-checked (completed)" classname="todo.spec.ts" time="0.53">
+</testcase>
+<testcase name="Todo List App › remaining count shows 2 tasks" classname="todo.spec.ts" time="0.542">
+</testcase>
+<testcase name="Todo List App › screenshot of initial state with correct items" classname="todo.spec.ts" time="0.77">
+<system-out>
+<![CDATA[A snapshot doesn't exist at D:\Dropbox\Projects\Samples\Angular-Playwright\todo-app\e2e\__snapshots__\todo.spec.ts\todo-list-initial.png, writing actual.
+
+[[ATTACHMENT|e2e\__snapshots__\todo.spec.ts\todo-list-initial.png]]
+
+[[ATTACHMENT|test-results\todo-Todo-List-App-screens-13541-al-state-with-correct-items-chromium\todo-list-initial-actual.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Todo List App › can toggle a todo item and screenshot reflects change" classname="todo.spec.ts" time="0.814">
+<system-out>
+<![CDATA[A snapshot doesn't exist at D:\Dropbox\Projects\Samples\Angular-Playwright\todo-app\e2e\__snapshots__\todo.spec.ts\todo-list-after-toggle.png, writing actual.
+
+[[ATTACHMENT|e2e\__snapshots__\todo.spec.ts\todo-list-after-toggle.png]]
+
+[[ATTACHMENT|test-results\todo-Todo-List-App-can-tog-d9dfc--screenshot-reflects-change-chromium\todo-list-after-toggle-actual.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Todo List App › can add a new todo item" classname="todo.spec.ts" time="0.917">
+<system-out>
+<![CDATA[A snapshot doesn't exist at D:\Dropbox\Projects\Samples\Angular-Playwright\todo-app\e2e\__snapshots__\todo.spec.ts\todo-after-add.png, writing actual.
+
+[[ATTACHMENT|e2e\__snapshots__\todo.spec.ts\todo-after-add.png]]
+
+[[ATTACHMENT|test-results\todo-Todo-List-App-can-add-a-new-todo-item-chromium\todo-after-add-actual.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Todo List App › can delete a todo item" classname="todo.spec.ts" time="0.954">
+<system-out>
+<![CDATA[A snapshot doesn't exist at D:\Dropbox\Projects\Samples\Angular-Playwright\todo-app\e2e\__snapshots__\todo.spec.ts\todo-after-delete.png, writing actual.
+
+[[ATTACHMENT|e2e\__snapshots__\todo.spec.ts\todo-after-delete.png]]
+
+[[ATTACHMENT|test-results\todo-Todo-List-App-can-delete-a-todo-item-chromium\todo-after-delete-actual.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Todo List App › empty input does not add a todo" classname="todo.spec.ts" time="0.548">
+</testcase>
+</testsuite>
+</testsuites>

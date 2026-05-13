@@ -1,0 +1,46 @@
+<div class="app-container">
+  <div class="todo-card">
+    <h1 class="title">My Todo List</h1>
+
+    <form class="add-form" (ngSubmit)="addTodo()">
+      <input
+        class="add-input"
+        type="text"
+        placeholder="Add a new task..."
+        [(ngModel)]="newTodoText"
+        name="newTodo"
+        data-testid="new-todo-input"
+      />
+      <button class="add-btn" type="submit" data-testid="add-todo-btn">Add</button>
+    </form>
+
+    <ul class="todo-list" data-testid="todo-list">
+      <li
+        *ngFor="let todo of todos"
+        class="todo-item"
+        [class.completed]="todo.completed"
+        [attr.data-testid]="'todo-item-' + todo.id"
+      >
+        <input
+          type="checkbox"
+          class="todo-checkbox"
+          [checked]="todo.completed"
+          (change)="toggleTodo(todo)"
+          [attr.data-testid]="'todo-checkbox-' + todo.id"
+        />
+        <span class="todo-text">{{ todo.text }}</span>
+        <button
+          class="delete-btn"
+          (click)="deleteTodo(todo.id)"
+          [attr.data-testid]="'delete-btn-' + todo.id"
+        >
+          &times;
+        </button>
+      </li>
+    </ul>
+
+    <p class="footer" data-testid="remaining-count">
+      {{ remainingCount }} task{{ remainingCount !== 1 ? 's' : '' }} remaining
+    </p>
+  </div>
+</div>
